@@ -13,6 +13,8 @@ export default function seedDatabaseIfNeeded() {
 
     let Thing = sqldb.Thing;
     let User = sqldb.User;
+    let Role = sqldb.Role;
+
 
     let promises = [];
 
@@ -46,19 +48,63 @@ export default function seedDatabaseIfNeeded() {
     let userPromise = User.destroy({ where: {} })
         .then(() => User.bulkCreate([{
             provider: 'local',
-            name: 'Test User',
+            firstname: 'Catalin',
+            middlename: 'Constantin',
+            lastname: 'Moldovan',
+            idType: 'CI',
+            idSerie: 'BV',
+            idNumber: '803000',
+            idNationalId: '1999999',
+            idIssuedBy: 'Pol Brasov',
+            addressCity: 'Brasov',
+            addressCounty: 'Brasov',
+            addressCountry: 'Romania',
+            addressStreet: 'fff',
+            addressNumber: '44A',
+            addressBuilding: 'C2',
+            addressStair: 'F',
+            addressFloor: 'Parter',
+            addressApartament: '22C',
             email: 'test@example.com',
             password: 'test'
         }, {
             provider: 'local',
             role: 'admin',
-            name: 'Admin',
+            firstname: 'Catalin',
+            middlename: 'Constantin',
+            lastname: 'Moldovan',
+            idType: 'CI',
+            idSerie: 'BV',
+            idNumber: '803000',
+            idNationalId: '1999999',
+            idIssuedBy: 'Pol Brasov',
+            addressCity: 'Brasov',
+            addressCounty: 'Brasov',
+            addressCountry: 'Romania',
+            addressStreet: 'fff',
+            addressNumber: '44A',
+            addressBuilding: 'C2',
+            addressStair: 'F',
+            addressFloor: 'Parter',
+            addressApartament: '22C',
             email: 'admin@example.com',
             password: 'admin'
         }])
             .then(() => console.log('finished populating users'))
             .catch(err => console.log('error populating users', err)));
     promises.push(userPromise);
+
+    let rolePromise = Role.destroy({ where: {} })
+        .then(() => Role.bulkCreate([{
+            name: 'Owner',
+            info: ''
+        }, {
+            name: 'Renter',
+            info: ''
+        }]))
+        .then(() => console.log('finished populating things'))
+        .catch(err => console.log('error populating things', err));
+    promises.push(thingPromise);
 
     return Promise.all(promises);
 }

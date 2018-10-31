@@ -13,7 +13,13 @@ export default function (sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
-        name: DataTypes.STRING,
+        isCompany: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        firstname: DataTypes.STRING,
+        middlename: DataTypes.STRING,
+        lastname: DataTypes.STRING,
         email: {
             type: DataTypes.STRING,
             unique: {
@@ -22,6 +28,62 @@ export default function (sequelize, DataTypes) {
             validate: {
                 isEmail: true
             }
+        },
+        idType: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        idSerie: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        idNumber: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        idNationalId: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        idIssuedBy: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        addressCity: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        addressCounty: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        addressCountry: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        addressStreet: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        addressNumber: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        addressBuilding: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        addressStair: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        addressFloor: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        addressApartament: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
         role: {
             type: DataTypes.STRING,
