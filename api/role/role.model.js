@@ -6,11 +6,18 @@ export default function(sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
-        name: DataTypes.STRING,
-        info: DataTypes.STRING,
+        name: {
+            type: DataTypes.STRING,
+            field: 'Name'
+        },
+        info:{
+            type: DataTypes.STRING,
+            field: 'Info'
+        },
         active: {
             type: DataTypes.BOOLEAN,
-            defaultValue: 1
-        }
+            defaultValue: 1,
+            field: 'Active'
+        } 
     });
 }

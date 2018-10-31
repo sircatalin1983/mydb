@@ -13,5 +13,13 @@ var db = {
 db.Thing = db.sequelize.import('../api/thing/thing.model');
 db.User = db.sequelize.import('../api/user/user.model');
 db.Role = db.sequelize.import('../api/role/role.model');
+db.PropertyType = db.sequelize.import('../api/property-type/property-type.model');
+db.Property = db.sequelize.import('../api/property/property.model');
+
+db.Property.belongsTo(db.User);
+db.User.hasMany(db.Property);
+
+db.Property.belongsTo(db.PropertyType);
+db.PropertyType.hasMany(db.Property);
 
 module.exports = db;

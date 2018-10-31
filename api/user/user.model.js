@@ -12,14 +12,24 @@ export default function (sequelize, DataTypes) {
             allowNull: false,
             primaryKey: true,
             autoIncrement: true
-        },
+        }, 
         isCompany: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: 0,
+            field: 'IsCompany'
         },
-        firstname: DataTypes.STRING,
-        middlename: DataTypes.STRING,
-        lastname: DataTypes.STRING,
+        firstName: { 
+            type: DataTypes.STRING,
+            field: 'FirstName'
+        },
+        middleName: { 
+            type: DataTypes.STRING,
+            field: 'MiddleName'
+        },
+        lastName: { 
+            type: DataTypes.STRING,
+            field: 'LastName'
+        },
         email: {
             type: DataTypes.STRING,
             unique: {
@@ -27,80 +37,115 @@ export default function (sequelize, DataTypes) {
             },
             validate: {
                 isEmail: true
-            }
+            },
+            field: 'Email'
         },
         idType: {
             type: DataTypes.STRING,
             allowNull: false,
+            field: 'IdType'
         },
         idSerie: {
             type: DataTypes.STRING,
             allowNull: false,
+            field: 'IdSerie'
         },
         idNumber: {
             type: DataTypes.STRING,
             allowNull: false,
+            field: 'IdNumber'
         },
         idNationalId: {
             type: DataTypes.STRING,
             allowNull: false,
+            field: 'IdNationalId'
         },
         idIssuedBy: {
             type: DataTypes.STRING,
             allowNull: false,
+            field: 'IdIssuedBy'
         },
         addressCity: {
             type: DataTypes.STRING,
             allowNull: true,
+            field: 'AddressCity'
         },
         addressCounty: {
             type: DataTypes.STRING,
             allowNull: true,
+            field: 'AddressCounty'
         },
         addressCountry: {
             type: DataTypes.STRING,
             allowNull: true,
+            field: 'AddressCountry'
         },
         addressStreet: {
             type: DataTypes.STRING,
             allowNull: true,
+            field: 'AddressStreet'
         },
         addressNumber: {
             type: DataTypes.STRING,
             allowNull: true,
+            field: 'AddressNumber'
         },
         addressBuilding: {
             type: DataTypes.STRING,
             allowNull: true,
+            field: 'AddressBuilding'
         },
         addressStair: {
             type: DataTypes.STRING,
             allowNull: true,
+            field: 'AddressStair'
         },
         addressFloor: {
             type: DataTypes.STRING,
             allowNull: true,
+            field: 'AddressFloor'
         },
-        addressApartament: {
+        addressApartment: {
             type: DataTypes.STRING,
             allowNull: true,
+            field: 'AddressApartment'
         },
         role: {
             type: DataTypes.STRING,
-            defaultValue: 'user'
+            defaultValue: 'user',
+            field: 'Role'
         },
         password: {
             type: DataTypes.STRING,
             validate: {
                 notEmpty: true
-            }
+            },
+            field: 'Password'
         },
-        provider: DataTypes.STRING,
-        salt: DataTypes.STRING,
-        acebook: DataTypes.STRING,
-        twitter: DataTypes.STRING,
-        google: DataTypes.STRING,
-        github: DataTypes.STRING
+        provider: {
+            type: DataTypes.STRING,
+            field: 'Provider'
+        },
+        salt: {
+            type: DataTypes.STRING,
+            field: 'Salt'
+        },
+        facebook: {
+            type: DataTypes.STRING,
+            field: 'Facebook'
+        },
+        twitter: {
+            type: DataTypes.STRING,
+            field: 'Twitter'
+        },
+        google: {
+            type: DataTypes.STRING,
+            field: 'Google'
+        },
+        github: {
+            type: DataTypes.STRING,
+            field: 'Github'
+        }
         /*
         facebook: DataTypes.JSON,
         twitter: DataTypes.JSON,

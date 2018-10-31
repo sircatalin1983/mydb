@@ -7,36 +7,79 @@ import sqldb from '../sqldb';
 import config from './environment/';
 
 export default function seedDatabaseIfNeeded() {
-    if(!config.seedDB) {
+    if (!config.seedDB) {
         return Promise.resolve();
     }
 
     let Thing = sqldb.Thing;
     let User = sqldb.User;
     let Role = sqldb.Role;
-
+    let PropertyType = sqldb.PropertyType;
+    let Property = sqldb.Property;
 
     let promises = [];
+/*
+    let propertyPromise = Property.destroy({ where: {} })
+        .then(() => Property.bulkCreate([{
+            addressCity: 'Brasov',
+            addressCounty: 'Brasov',
+            addressCountry: 'Romania',
+            addressStreet: 'fff',
+            addressNumber: '44A',
+            addressBuilding: 'C2',
+            addressStair: 'F',
+            addressFloor: 'Parter',
+            addressApartament: '22C',
+            details: '',
+            state: ''
+        }, {
+            addressCity: 'Brasov',
+            addressCounty: 'Brasov',
+            addressCountry: 'Romania',
+            addressStreet: 'fff',
+            addressNumber: '44A',
+            addressBuilding: 'C2',
+            addressStair: 'F',
+            addressFloor: 'Parter',
+            addressApartament: '22C',
+            details: '',
+            state: ''
+        }]))
+        .then(() => console.log('finished populating property'))
+        .catch(err => console.log('error populating property', err));
+    promises.push(propertyPromise);
+
+    let propertyTypePromise = PropertyType.destroy({ where: {} })
+        .then(() => PropertyType.bulkCreate([{
+            name: 'Ap 2 Cam',
+            info: ''
+        }, {
+            name: 'Casa',
+            info: ''
+        }]))
+        .then(() => console.log('finished populating property types'))
+        .catch(err => console.log('error populating property types', err));
+    promises.push(propertyTypePromise);
 
     let thingPromise = Thing.destroy({ where: {} })
         .then(() => Thing.bulkCreate([{
             name: 'Development Tools',
             info: 'Integration with popular tools such as Webpack, Babel, TypeScript, Karma, Mocha, ESLint, Protractor, '
-                    + 'Pug, Stylus, Sass, and Less.'
+                + 'Pug, Stylus, Sass, and Less.'
         }, {
             name: 'Server and Client integration',
             info: 'Built with a powerful and fun stack: MongoDB, Express, Angular, and Node.'
         }, {
             name: 'Smart Build System',
             info: 'Build system ignores `spec` files, allowing you to keep tests alongside code. Automatic injection of '
-                    + 'scripts and styles into your app.html'
+                + 'scripts and styles into your app.html'
         }, {
             name: 'Modular Structure',
             info: 'Best practice client and server structures allow for more code reusability and maximum scalability'
         }, {
             name: 'Optimized Build',
             info: 'Build process packs up your templates as a single JavaScript payload, minifies your '
-                      + 'scripts/css/images, and rewrites asset names for caching.'
+                + 'scripts/css/images, and rewrites asset names for caching.'
         }, {
             name: 'Deployment Ready',
             info: 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators'
@@ -45,12 +88,24 @@ export default function seedDatabaseIfNeeded() {
         .catch(err => console.log('error populating things', err));
     promises.push(thingPromise);
 
+    let rolePromise = Role.destroy({ where: {} })
+        .then(() => Role.bulkCreate([{
+            name: 'Owner',
+            info: ''
+        }, {
+            name: 'Renter',
+            info: ''
+        }]))
+        .then(() => console.log('finished populating roles'))
+        .catch(err => console.log('error populating roles', err));
+    promises.push(rolePromise);
+
     let userPromise = User.destroy({ where: {} })
         .then(() => User.bulkCreate([{
             provider: 'local',
-            firstname: 'Catalin',
-            middlename: 'Constantin',
-            lastname: 'Moldovan',
+            firstName: 'Catalin',
+            middleName: 'Constantin',
+            lastName: 'Moldovan',
             idType: 'CI',
             idSerie: 'BV',
             idNumber: '803000',
@@ -70,9 +125,9 @@ export default function seedDatabaseIfNeeded() {
         }, {
             provider: 'local',
             role: 'admin',
-            firstname: 'Catalin',
-            middlename: 'Constantin',
-            lastname: 'Moldovan',
+            firstName: 'Catalin',
+            middleName: 'Constantin',
+            lastName: 'Moldovan',
             idType: 'CI',
             idSerie: 'BV',
             idNumber: '803000',
@@ -94,17 +149,7 @@ export default function seedDatabaseIfNeeded() {
             .catch(err => console.log('error populating users', err)));
     promises.push(userPromise);
 
-    let rolePromise = Role.destroy({ where: {} })
-        .then(() => Role.bulkCreate([{
-            name: 'Owner',
-            info: ''
-        }, {
-            name: 'Renter',
-            info: ''
-        }]))
-        .then(() => console.log('finished populating things'))
-        .catch(err => console.log('error populating things', err));
-    promises.push(thingPromise);
+//*/
 
     return Promise.all(promises);
 }
