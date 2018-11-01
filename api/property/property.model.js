@@ -6,7 +6,8 @@ export default function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
+            field: 'Id'
         },
         addressCity: {
             type: DataTypes.STRING,
@@ -67,6 +68,22 @@ export default function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             defaultValue: 1,
             field: 'Active'
+        },
+        idPropertyType: {
+            type: DataTypes.INTEGER,            
+            references: {
+                model: 'PropertyTypes',
+                key: 'Id'
+            },
+            field: 'IdPropertyType'
+        },
+        idOwner: {
+            type: DataTypes.INTEGER,            
+            references: {
+                model: 'Users',
+                key: 'Id'
+            },
+            field: 'IdOwner'
         }
     });
 }

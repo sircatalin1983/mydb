@@ -4,7 +4,8 @@ export default function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
+            field: 'Id'
         },
         startDate: {
             type: DataTypes.DATE,
@@ -79,6 +80,14 @@ export default function(sequelize, DataTypes) {
         specialClauses: {
             type: DataTypes.STRING,
             field: 'SpecialClauses'
+        },
+        idProperty: {
+            type: DataTypes.INTEGER,            
+            references: {
+                model: 'Properties',
+                key: 'Id'
+            },
+            field: 'IdProperty'
         }
     });
 }

@@ -11,7 +11,8 @@ export default function (sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
+            field: 'Id'
         }, 
         isCompany: {
             type: DataTypes.BOOLEAN,

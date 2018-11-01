@@ -17,8 +17,34 @@ export default function seedDatabaseIfNeeded() {
     let PropertyType = sqldb.PropertyType;
     let Property = sqldb.Property;
     let Contract = sqldb.Contract;
+    let Part = sqldb.Part;
+    let InventoryItem = sqldb.InventoryItem;
 
     let promises = [];
+
+    let inventoryItemPromise = Contract.destroy({ where: {} })
+        .then(() => Contract.bulkCreate([{
+            info: 'd.',
+            state: 'Scaz'
+        }, {
+            info: 'd.',
+            state: 'Scasz'
+        }]))
+        .then(() => console.log('finished populating InventoryItem'))
+        .catch(err => console.log('error populating InventoryItem', err));
+    promises.push(inventoryItemPromise);
+
+    let partPromise = Contract.destroy({ where: {} })
+        .then(() => Contract.bulkCreate([{
+            name: 'Scaz',
+            info: 'd.'
+        }, {
+            name: 'Scasz',
+            info: 'd.'
+        }]))
+        .then(() => console.log('finished populating partPromise'))
+        .catch(err => console.log('error populating partPromise', err));
+    promises.push(partPromise);
 
     let contractPromise = Contract.destroy({ where: {} })
         .then(() => Contract.bulkCreate([{
@@ -58,7 +84,7 @@ export default function seedDatabaseIfNeeded() {
     promises.push(propertyTypePromise);
 
     let propertyPromise = Property.destroy({ where: {} })
-        .then(() => Property.bulkCreate([{
+        .then(() => Property.bulkCreate([{           
             addressCity: 'Brasov',
             addressCounty: 'Brasov',
             addressCountry: 'Romania',
@@ -123,6 +149,9 @@ export default function seedDatabaseIfNeeded() {
             name: 'Renter',
             info: ''
         }]))
+        .then(function(response){
+            //var x = json(response);
+        })
         .then(() => console.log('finished populating roles'))
         .catch(err => console.log('error populating roles', err));
     promises.push(rolePromise);

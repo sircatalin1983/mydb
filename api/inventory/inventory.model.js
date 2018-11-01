@@ -1,15 +1,11 @@
 export default function(sequelize, DataTypes) {
-    return sequelize.define('Part', {
+    return sequelize.define('Inventory', {
         _id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
             field: 'Id'
-        },
-        name: {
-            type: DataTypes.STRING,
-            field: 'Name'
         },
         info:{
             type: DataTypes.STRING,
@@ -20,13 +16,17 @@ export default function(sequelize, DataTypes) {
             defaultValue: 1,
             field: 'Active'
         },
-        idProperty: {
+        state: {
+            type: DataTypes.STRING,
+            field: 'State'
+        },
+        idContract: {
             type: DataTypes.INTEGER,            
             references: {
-                model: 'Properties',
+                model: 'Contracts',
                 key: 'Id'
             },
-            field: 'IdProperty'
+            field: 'IdContract'
         }
     });
 }
