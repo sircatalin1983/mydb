@@ -16,9 +16,47 @@ export default function seedDatabaseIfNeeded() {
     let Role = sqldb.Role;
     let PropertyType = sqldb.PropertyType;
     let Property = sqldb.Property;
+    let Contract = sqldb.Contract;
 
     let promises = [];
-/*
+
+    let contractPromise = Contract.destroy({ where: {} })
+        .then(() => Contract.bulkCreate([{
+            startDate: '22 Oct 2018',
+            endDate: '22 Oct 2019',
+            duration: '12',
+            paymentDate: '1',
+            paymentType: 'Cash',
+            paymentLocation: 'La locul chirieri',
+            paymentIBAN: '',
+            rent: '300',
+            rentInLetters: 'trei sute',
+            rentCurrency: 'EUR',
+            upfrontPayment: '200',
+            upfrontPaymentLetters: 'sss',
+            upfrontPaymentCurrency: 'EUR',
+            upfrontPaymentDetails: 'sss',
+            warranty: '300',
+            warrantyLetters: 'trei sute',
+            warrantyCurrency: 'EUR',
+            specialClauses: 'Nimic de adaugat'
+        }]))
+        .then(() => console.log('finished populating contracts'))
+        .catch(err => console.log('error populating contracts', err));
+    promises.push(contractPromise);
+
+    let propertyTypePromise = PropertyType.destroy({ where: {} })
+        .then(() => PropertyType.bulkCreate([{
+            name: 'Ap 2 Cam',
+            info: ''
+        }, {
+            name: 'Casa',
+            info: ''
+        }]))
+        .then(() => console.log('finished populating property types'))
+        .catch(err => console.log('error populating property types', err));
+    promises.push(propertyTypePromise);
+
     let propertyPromise = Property.destroy({ where: {} })
         .then(() => Property.bulkCreate([{
             addressCity: 'Brasov',
@@ -33,6 +71,7 @@ export default function seedDatabaseIfNeeded() {
             details: '',
             state: ''
         }, {
+            propertyTypeId: 1,
             addressCity: 'Brasov',
             addressCounty: 'Brasov',
             addressCountry: 'Romania',
@@ -48,18 +87,6 @@ export default function seedDatabaseIfNeeded() {
         .then(() => console.log('finished populating property'))
         .catch(err => console.log('error populating property', err));
     promises.push(propertyPromise);
-
-    let propertyTypePromise = PropertyType.destroy({ where: {} })
-        .then(() => PropertyType.bulkCreate([{
-            name: 'Ap 2 Cam',
-            info: ''
-        }, {
-            name: 'Casa',
-            info: ''
-        }]))
-        .then(() => console.log('finished populating property types'))
-        .catch(err => console.log('error populating property types', err));
-    promises.push(propertyTypePromise);
 
     let thingPromise = Thing.destroy({ where: {} })
         .then(() => Thing.bulkCreate([{
@@ -149,7 +176,7 @@ export default function seedDatabaseIfNeeded() {
             .catch(err => console.log('error populating users', err)));
     promises.push(userPromise);
 
-//*/
+    //*/
 
     return Promise.all(promises);
 }
