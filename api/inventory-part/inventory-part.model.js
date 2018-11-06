@@ -11,13 +11,13 @@ export default function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             field: 'State'
         },
-        idInventory: {
+        idContract: {
             type: DataTypes.INTEGER,            
             references: {
-                model: 'Inventories',
+                model: 'Contracts',
                 key: 'Id'
             },
-            field: 'IdInventory'
+            field: 'IdContract'
         },
         idPart: {
             type: DataTypes.INTEGER,            
