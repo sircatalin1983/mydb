@@ -9,12 +9,12 @@
  */
 
 import { applyPatch } from 'fast-json-patch';
-import {Role} from '../../sqldb';
+import { Role } from '../../sqldb';
 
 function respondWithResult(res, statusCode) {
     statusCode = statusCode || 200;
-    return function(entity) {
-        if(entity) {
+    return function (entity) {
+        if (entity) {
             return res.status(statusCode).json(entity);
         }
         return null;
@@ -22,10 +22,10 @@ function respondWithResult(res, statusCode) {
 }
 
 function patchUpdates(patches) {
-    return function(entity) {
+    return function (entity) {
         try {
             applyPatch(entity, patches, /*validate*/ true);
-        } catch(err) {
+        } catch (err) {
             return Promise.reject(err);
         }
 
@@ -34,8 +34,8 @@ function patchUpdates(patches) {
 }
 
 function removeEntity(res) {
-    return function(entity) {
-        if(entity) {
+    return function (entity) {
+        if (entity) {
             return entity.destroy()
                 .then(() => res.status(204).end());
         }
@@ -43,8 +43,8 @@ function removeEntity(res) {
 }
 
 function handleEntityNotFound(res) {
-    return function(entity) {
-        if(!entity) {
+    return function (entity) {
+        if (!entity) {
             res.status(404).end();
             return null;
         }
@@ -54,9 +54,27 @@ function handleEntityNotFound(res) {
 
 function handleError(res, statusCode) {
     statusCode = statusCode || 500;
-    return function(err) {
+    return function (err) {
         res.status(statusCode).send(err);
     };
+}
+
+
+function update(patches) {
+
+    console.log('req.patches: ' + JSON.stringify(patches));
+/*
+    return function (entity) {
+      /*
+        try {
+            applyPatch(entity, patches, true);
+        } catch (err) {
+            return Promise.reject(err);
+        }
+
+        //return entity.save();
+    };
+    //*/
 }
 
 // Gets a list of Roles
@@ -70,7 +88,7 @@ export function index(req, res) {
 export function show(req, res) {
     return Role.find({
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(handleEntityNotFound(res))
@@ -87,26 +105,37 @@ export function create(req, res) {
 
 // Upserts the given Role in the DB at the specified ID
 export function upsert(req, res) {
-    if(req.body._id) {
-        Reflect.deleteProperty(req.body, '_id');
+    console.log('req.body.id: ' + req.body.id);
+    console.log('req.params.id: ' + req.params.id);
+
+    if (req.body.id) {
+        Reflect.deleteProperty(req.body, 'id');
     }
-    return Role.upsert(req.body, {
-        where: {
-            _id: req.params.id
+
+    return Role.upsert({
+            name: "ddd",
+            info: "habar n-am ce are",
+            active: 0
+        }, {
+            where: {
+                "id": {
+                    $eq: req.params.id
+                }
+            }, logging: console.log
         }
-    })
+    )
         .then(respondWithResult(res))
         .catch(handleError(res));
 }
 
 // Updates an existing Role in the DB
 export function patch(req, res) {
-    if(req.body._id) {
-        Reflect.deleteProperty(req.body, '_id');
+    if (req.body.id) {
+        Reflect.deleteProperty(req.body, 'id');
     }
     return Role.find({
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(handleEntityNotFound(res))
@@ -119,7 +148,7 @@ export function patch(req, res) {
 export function destroy(req, res) {
     return Role.find({
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(handleEntityNotFound(res))

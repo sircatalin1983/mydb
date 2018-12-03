@@ -9,6 +9,8 @@ var db = {
     sequelize: new Sequelize(config.sequelize.uri, config.sequelize.options)
 };
 
+//db.sequelize.sync({ logging: console.log });
+
 // Insert models below
 db.Thing = db.sequelize.import('../api/thing/thing.model');
 
