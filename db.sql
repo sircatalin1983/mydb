@@ -27,18 +27,18 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `Things` (
-  `_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `info` varchar(255) DEFAULT NULL,
   `active` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `Things`
 --
 
-INSERT INTO `Things` (`_id`, `name`, `info`, `active`) VALUES
+INSERT INTO `Things` (`id`, `name`, `info`, `active`) VALUES
 (14, 'Development Tools', 'Integration with popular tools such as Webpack, Babel, TypeScript, Karma, Mocha, ESLint, Protractor, Pug, Stylus, Sass, and Less.', NULL),
 (15, 'Server and Client integration', 'Built with a powerful and fun stack: MongoDB, Express, Angular, and Node.', NULL),
 (16, 'Smart Build System', 'Build system ignores `spec` files, allowing you to keep tests alongside code. Automatic injection of scripts and styles into your app.html', NULL),
@@ -53,7 +53,7 @@ INSERT INTO `Things` (`_id`, `name`, `info`, `active`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `Users` (
-  `_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `role` varchar(255) DEFAULT 'user',
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `Users` (
   `twitter` varchar(255) DEFAULT NULL,
   `google` varchar(255) DEFAULT NULL,
   `github` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`_id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `Users_email_unique` (`email`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `Users` (
 -- Dumping data for table `Users`
 --
 
-INSERT INTO `Users` (`_id`, `name`, `email`, `role`, `password`, `provider`, `salt`, `acebook`, `twitter`, `google`, `github`) VALUES
+INSERT INTO `Users` (`id`, `name`, `email`, `role`, `password`, `provider`, `salt`, `acebook`, `twitter`, `google`, `github`) VALUES
 (5, 'Test User', 'test@example.com', 'user', 'Vu3cuLFOuIipzR1f+5JeOWipIsxb0OMxnDkS9YT4B+b0JXm/9GNIt28EDKp/6WNs0xxgYpuTtS+mOevVXwraDg==', 'local', 'XoeWi93VYmDOykU5Cyw9gA==', NULL, NULL, NULL, NULL),
 (6, 'Admin', 'admin@example.com', 'admin', 'g3D4RS328otDZe3yEJsOlkXGpQKMsUpFoR/+4FCKb3kGkjcvjfOs8gzotoG23HNJb09oXThO7S1NiZD/ZQ3t5g==', 'local', 'BrpNkB+gFaYkxojNJoq4FQ==', NULL, NULL, NULL, NULL);
 

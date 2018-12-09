@@ -70,7 +70,7 @@ export function index(req, res) {
 export function show(req, res) {
     return Part.find({
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(handleEntityNotFound(res))
@@ -87,26 +87,56 @@ export function create(req, res) {
 
 // Upserts the given Part in the DB at the specified ID
 export function upsert(req, res) {
-    if(req.body._id) {
-        Reflect.deleteProperty(req.body, '_id');
+    if (req.body.id) {
+        Reflect.deleteProperty(req.body, 'id');
+    }
+
+    return Part.findById(req.params.id).then(item => {
+        if (item) {
+            Part.update(
+                req.body,
+                {
+                    where: { id: req.params.id },
+                    logging: console.log
+                }
+            )
+                .then(respondWithResult(res))
+                .catch(handleError(res));
+        } else {
+            Part.create(
+                req.body,
+                {
+                    where: { id: req.params.id },
+                    logging: console.log
+                }
+            )
+                .then(respondWithResult(res))
+                .catch(handleError(res));
+        }
+    });
+    /*
+    if(req.body.id) {
+        Reflect.deleteProperty(req.body, 'id');
     }
     return Part.upsert(req.body, {
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(respondWithResult(res))
         .catch(handleError(res));
+
+        //*/
 }
 
 // Updates an existing Part in the DB
 export function patch(req, res) {
-    if(req.body._id) {
-        Reflect.deleteProperty(req.body, '_id');
+    if(req.body.id) {
+        Reflect.deleteProperty(req.body, 'id');
     }
     return Part.find({
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(handleEntityNotFound(res))
@@ -119,7 +149,7 @@ export function patch(req, res) {
 export function destroy(req, res) {
     return Part.find({
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(handleEntityNotFound(res))

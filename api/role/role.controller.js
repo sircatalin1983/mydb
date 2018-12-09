@@ -63,18 +63,18 @@ function handleError(res, statusCode) {
 function update(patches) {
 
     console.log('req.patches: ' + JSON.stringify(patches));
-/*
-    return function (entity) {
-      /*
-        try {
-            applyPatch(entity, patches, true);
-        } catch (err) {
-            return Promise.reject(err);
-        }
-
-        //return entity.save();
-    };
-    //*/
+    /*
+        return function (entity) {
+          /*
+            try {
+                applyPatch(entity, patches, true);
+            } catch (err) {
+                return Promise.reject(err);
+            }
+    
+            //return entity.save();
+        };
+        //*/
 }
 
 // Gets a list of Roles
@@ -105,27 +105,122 @@ export function create(req, res) {
 
 // Upserts the given Role in the DB at the specified ID
 export function upsert(req, res) {
-    console.log('req.body.id: ' + req.body.id);
-    console.log('req.params.id: ' + req.params.id);
 
     if (req.body.id) {
         Reflect.deleteProperty(req.body, 'id');
     }
 
-    return Role.upsert({
-            name: "ddd",
-            info: "habar n-am ce are",
-            active: 0
-        }, {
-            where: {
-                "id": {
-                    $eq: req.params.id
+    return Role.findById(req.params.id).then(item => {
+        if (item) {
+            Role.update(
+                req.body,
+                {
+                    where: { id: req.params.id },
+                    logging: console.log
                 }
-            }, logging: console.log
+            )
+                .then(respondWithResult(res))
+                .catch(handleError(res));
+        } else {
+            Role.create(
+                req.body,
+                {
+                    where: { id: req.params.id },
+                    logging: console.log
+                }
+            )
+                .then(respondWithResult(res))
+                .catch(handleError(res));
+        }
+    });
+
+
+    /*
+    const id = req.params.id;
+
+    console.log("id: " + id);
+
+    const role = Role.build({
+        name: "ddd",
+        info: "habar n-am ce are",
+        active: 0
+    });
+
+    return Role.update({
+        name: "ddd",
+        info: "habar n-am ce are",
+        active: 0
+    },
+        {
+            where: { id: req.params.id },
+            logging: console.log
         }
     )
         .then(respondWithResult(res))
+        .catch(handleError(res));;
+
+
+
+    /*
+    return role.save()
+        .then(respondWithResult(res))
         .catch(handleError(res));
+
+    /*
+        if (req.body.id) {
+            //  Reflect.deleteProperty(req.body, 'id');
+        }
+    
+        Role.findById(req.params.id).then(role => {
+    
+            //role.name = "dddd";
+    /*
+            role.update()
+                .then(respondWithResult(res))
+                .catch(handleError(res));
+            console.log('pula mea');
+        });
+    
+        const role = Role.build({
+            name: "ddd",
+            info: "habar n-am ce are",
+            active: 0
+        });
+    
+        return role.save()
+            .then(respondWithResult(res))
+            .catch(handleError(res));
+        /*
+            return Role.upsert({
+                name: "ddd",
+                info: "habar n-am ce are",
+                active: 0
+            }, {
+                    where: {
+                        "id": "344"
+                    }, logging: console.log
+                }
+            )
+                .then(respondWithResult(res))
+                .catch(handleError(res));
+        
+            /*
+                    Role.upsert({
+                        name: "ddd",
+                        info: "habar n-am ce are",
+                        active: 0
+                    }, {
+                        where: {
+                            "id": {
+                                $eq: req.params.id
+                            }
+                        }, logging: console.log
+                    }
+                )
+                    .then(respondWithResult(res))
+                    .catch(handleError(res));
+            //*/
+
 }
 
 // Updates an existing Role in the DB

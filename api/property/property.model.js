@@ -2,7 +2,7 @@ import propertyTypeModel from "../property-type/property-type.model";
 
 export default function (sequelize, DataTypes) {
     return sequelize.define('Property', {
-        _id: {
+        id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,

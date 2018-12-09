@@ -70,7 +70,7 @@ export function index(req, res) {
 export function show(req, res) {
     return InventoryPart.find({
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(handleEntityNotFound(res))
@@ -87,26 +87,58 @@ export function create(req, res) {
 
 // Upserts the given InventoryPart in the DB at the specified ID
 export function upsert(req, res) {
-    if(req.body._id) {
-        Reflect.deleteProperty(req.body, '_id');
+
+
+    if (req.body.id) {
+        Reflect.deleteProperty(req.body, 'id');
+    }
+
+    return InventoryPart.findById(req.params.id).then(item => {
+        if (item) {
+            InventoryPart.update(
+                req.body,
+                {
+                    where: { id: req.params.id },
+                    logging: console.log
+                }
+            )
+                .then(respondWithResult(res))
+                .catch(handleError(res));
+        } else {
+            InventoryPart.create(
+                req.body,
+                {
+                    where: { id: req.params.id },
+                    logging: console.log
+                }
+            )
+                .then(respondWithResult(res))
+                .catch(handleError(res));
+        }
+    });
+/*
+
+    if(req.body.id) {
+        Reflect.deleteProperty(req.body, 'id');
     }
     return InventoryPart.upsert(req.body, {
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(respondWithResult(res))
         .catch(handleError(res));
+        //*/
 }
 
 // Updates an existing InventoryPart in the DB
 export function patch(req, res) {
-    if(req.body._id) {
-        Reflect.deleteProperty(req.body, '_id');
+    if(req.body.id) {
+        Reflect.deleteProperty(req.body, 'id');
     }
     return InventoryPart.find({
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(handleEntityNotFound(res))
@@ -119,7 +151,7 @@ export function patch(req, res) {
 export function destroy(req, res) {
     return InventoryPart.find({
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(handleEntityNotFound(res))

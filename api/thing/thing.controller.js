@@ -70,7 +70,7 @@ export function index(req, res) {
 export function show(req, res) {
     return Thing.find({
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(handleEntityNotFound(res))
@@ -87,12 +87,12 @@ export function create(req, res) {
 
 // Upserts the given Thing in the DB at the specified ID
 export function upsert(req, res) {
-    if(req.body._id) {
-        Reflect.deleteProperty(req.body, '_id');
+    if(req.body.id) {
+        Reflect.deleteProperty(req.body, 'id');
     }
     return Thing.upsert(req.body, {
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(respondWithResult(res))
@@ -101,12 +101,12 @@ export function upsert(req, res) {
 
 // Updates an existing Thing in the DB
 export function patch(req, res) {
-    if(req.body._id) {
-        Reflect.deleteProperty(req.body, '_id');
+    if(req.body.id) {
+        Reflect.deleteProperty(req.body, 'id');
     }
     return Thing.find({
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(handleEntityNotFound(res))
@@ -119,7 +119,7 @@ export function patch(req, res) {
 export function destroy(req, res) {
     return Thing.find({
         where: {
-            _id: req.params.id
+            id: req.params.id
         }
     })
         .then(handleEntityNotFound(res))

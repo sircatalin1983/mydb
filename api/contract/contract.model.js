@@ -1,6 +1,6 @@
 export default function(sequelize, DataTypes) {
     return sequelize.define('Contract', {
-        _id: {
+        id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
