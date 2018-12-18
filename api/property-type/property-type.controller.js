@@ -92,7 +92,7 @@ export function upsert(req, res) {
     }
 
     return PropertyType.findById(req.params.id).then(item => {
-        if (role) {
+        if (item) {
             PropertyType.update(
                 req.body,
                 {
