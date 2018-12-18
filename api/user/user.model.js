@@ -13,24 +13,7 @@ export default function (sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true,
             field: 'Id'
-        }, 
-        isCompany: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: 0,
-            field: 'IsCompany'
-        },
-        firstName: { 
-            type: DataTypes.STRING,
-            field: 'FirstName'
-        },
-        middleName: { 
-            type: DataTypes.STRING,
-            field: 'MiddleName'
-        },
-        lastName: { 
-            type: DataTypes.STRING,
-            field: 'LastName'
-        },
+        },    
         email: {
             type: DataTypes.STRING,
             unique: {
@@ -41,6 +24,19 @@ export default function (sequelize, DataTypes) {
             },
             field: 'Email'
         },
+/*
+        firstName: {
+            type: DataTypes.STRING,
+            field: 'FirstName'
+        },
+        middleName: {
+            type: DataTypes.STRING,
+            field: 'MiddleName'
+        },
+        lastName: {
+            type: DataTypes.STRING,
+            field: 'LastName'
+        },       
         idType: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -111,6 +107,7 @@ export default function (sequelize, DataTypes) {
             allowNull: true,
             field: 'AddressApartment'
         },
+        /*/
         role: {
             type: DataTypes.STRING,
             defaultValue: 'user',

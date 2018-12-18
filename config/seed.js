@@ -43,55 +43,53 @@ export default function seedDatabaseIfNeeded() {
             + 'Pug, Stylus, Sass, and Less.'
     });
 
+    let propertyType1 = PropertyType.build({
+        name: 'Apartament 2 Camere',
+        info: ''
+    });
+
+    let propertyType2 = PropertyType.build({
+        name: 'Apartament 3 Camere',
+        info: ''
+    });
+
+    let propertyType3 = PropertyType.build({
+        name: 'Apartament 4 Camere',
+        info: ''
+    });
+
+    let propertyType4 = PropertyType.build({
+        name: 'Garsonier',
+        info: ''
+    });
+
+    let propertyType5 = PropertyType.build({
+        name: 'Apartament Studio',
+        info: ''
+    });
+
     let user1 = User.build({
         provider: 'local',
-        firstName: 'Catalin',
-        middleName: 'Constantin',
-        lastName: 'Moldovan',
-        idType: 'CI',
-        idSerie: 'BV',
-        idNumber: '803000',
-        idNationalId: '1999999', 
-        idIssuedBy: 'Pol Brasov',
-        addressCity: 'Brasov',
-        addressCounty: 'Brasov',
-        addressCountry: 'Romania',
-        addressStreet: 'fff',
-        addressNumber: '44A',
-        addressBuilding: 'C2',
-        addressStair: 'F',
-        addressFloor: 'Parter',
-        addressApartament: '22C',
         email: 'test@example.com',
         password: 'test'
     });
 
     let user2 = User.build({
         provider: 'local',
-        firstName: 'Catalin',
-        middleName: 'Constantin',
-        lastName: 'Moldovan',
-        idType: 'CI',
-        idSerie: 'BV',
-        idNumber: '803000',
-        idNationalId: '1999999',
-        idIssuedBy: 'Pol Brasov',
-        addressCity: 'Brasov',
-        addressCounty: 'Brasov',
-        addressCountry: 'Romania',
-        addressStreet: 'fff',
-        addressNumber: '44A',
-        addressBuilding: 'C2',
-        addressStair: 'F',
-        addressFloor: 'Parter',
-        addressApartament: '22C',
         email: 'admin@example.com',
         password: 'test'
     });
 
-    let propertyType = PropertyType.build({
-        name: 'Ap 2 Cam',
-        info: ''
+    let user3 = User.build({
+        provider: 'local',        
+        email: 'admin@example.com',
+        password: 'test'
+    });
+
+    let user4 = User.build({
+        provider: 'local',        
+        email: 'admin@example.com',
+        password: 'test'
     });
 
     let property = Property.build({
@@ -166,7 +164,7 @@ export default function seedDatabaseIfNeeded() {
     });
 
     property.save().then(pProperty => {
-        propertyType.save().then(pPropertyType => {
+        propertyType1.save().then(pPropertyType => {
             return pPropertyType.addProperty(pProperty).then(resp => {
                 console.log('2');
             })
@@ -233,7 +231,6 @@ export default function seedDatabaseIfNeeded() {
                     });
                 });
             });
-
         });
     });
 
