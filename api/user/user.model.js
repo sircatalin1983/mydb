@@ -13,7 +13,11 @@ export default function (sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true,
             field: 'Id'
-        },    
+        },  
+        username: {
+            type: DataTypes.STRING,
+            field: 'Username'
+        },  
         email: {
             type: DataTypes.STRING,
             unique: {

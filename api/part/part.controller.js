@@ -13,8 +13,8 @@ import { Part } from '../../sqldb';
 
 function respondWithResult(res, statusCode) {
     statusCode = statusCode || 200;
-    return function(entity) {
-        if(entity) {
+    return function (entity) {
+        if (entity) {
             return res.status(statusCode).json(entity);
         }
         return null;
@@ -22,10 +22,10 @@ function respondWithResult(res, statusCode) {
 }
 
 function patchUpdates(patches) {
-    return function(entity) {
+    return function (entity) {
         try {
             applyPatch(entity, patches, /*validate*/ true);
-        } catch(err) {
+        } catch (err) {
             return Promise.reject(err);
         }
 
@@ -34,8 +34,8 @@ function patchUpdates(patches) {
 }
 
 function removeEntity(res) {
-    return function(entity) {
-        if(entity) {
+    return function (entity) {
+        if (entity) {
             return entity.destroy()
                 .then(() => res.status(204).end());
         }
@@ -43,8 +43,8 @@ function removeEntity(res) {
 }
 
 function handleEntityNotFound(res) {
-    return function(entity) {
-        if(!entity) {
+    return function (entity) {
+        if (!entity) {
             res.status(404).end();
             return null;
         }
@@ -54,7 +54,7 @@ function handleEntityNotFound(res) {
 
 function handleError(res, statusCode) {
     statusCode = statusCode || 500;
-    return function(err) {
+    return function (err) {
         res.status(statusCode).send(err);
     };
 }
@@ -74,6 +74,18 @@ export function show(req, res) {
         }
     })
         .then(handleEntityNotFound(res))
+        .then(respondWithResult(res))
+        .catch(handleError(res));
+}
+
+export function showItemsOfProperty(req, res) {
+    return Part.findAll(
+        {
+            where: {
+                idProperty: req.params.idProperty
+            }
+        }
+    )
         .then(respondWithResult(res))
         .catch(handleError(res));
 }
@@ -131,7 +143,7 @@ export function upsert(req, res) {
 
 // Updates an existing Part in the DB
 export function patch(req, res) {
-    if(req.body.id) {
+    if (req.body.id) {
         Reflect.deleteProperty(req.body, 'id');
     }
     return Part.find({

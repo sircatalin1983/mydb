@@ -91,6 +91,19 @@ export function upsert(req, res) {
         Reflect.deleteProperty(req.body, 'id');
     }
 
+    for (var i=0; i<req.body.length; i++) {
+        console.log ("element : " + req.body[i]);
+    }
+    
+    console.log ("req.params.body : " + req.body.length);
+    console.log ("req.params.id : " + req.body.id);
+    console.log ("req.params.id : " + req.body.idPropertyType);
+
+    console.log ("req.params.length : " + req.params.length);
+    console.log ("req.params.idPropertyType : " + req.params.idPropertyType);
+
+    console.log (JSON.stringify(req.body));
+
     return Property.findById(req.params.id).then(item => {
         if (item) {
             Property.update(

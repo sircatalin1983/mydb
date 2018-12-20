@@ -9,6 +9,11 @@ export default function (sequelize, DataTypes) {
             autoIncrement: true,
             field: 'Id'
         },
+        identificationLabel: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            field: 'IdentificationLabel'
+        },
         addressCity: {
             type: DataTypes.STRING,
             allowNull: true,
