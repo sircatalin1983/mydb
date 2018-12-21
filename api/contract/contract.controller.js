@@ -78,6 +78,18 @@ export function show(req, res) {
         .catch(handleError(res));
 }
 
+export function showItemsOfProperty(req, res) {
+    return Contract.findAll(
+        {
+            where: {
+                idProperty: req.params.idProperty
+            }
+        }
+    )
+        .then(respondWithResult(res))
+        .catch(handleError(res));
+}
+
 // Creates a new Contract in the DB
 export function create(req, res) {
     return Contract.create(req.body)

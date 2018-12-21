@@ -81,6 +81,11 @@ export default function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             field: 'SpecialClauses'
         },
+        active: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: 1,
+            field: 'Active'
+        },
         idProperty: {
             type: DataTypes.INTEGER,            
             references: {
