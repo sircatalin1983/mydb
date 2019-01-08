@@ -9,7 +9,7 @@
  */
 
 import { applyPatch } from 'fast-json-patch';
-import {Thing} from '../../sqldb';
+import { RoleOnContract } from '../../sqldb';
 
 function respondWithResult(res, statusCode) {
     statusCode = statusCode || 200;
@@ -78,6 +78,18 @@ export function show(req, res) {
         .catch(handleError(res));
 }
 
+export function showItemsOfContract(req, res) {
+    return RoleOnContract.findAll(
+        {
+            where: {
+                idContract: req.params.idContract
+            }
+        }
+    )
+        .then(respondWithResult(res))
+        .catch(handleError(res));
+}
+
 // Creates a new RoleOnContract in the DB
 export function create(req, res) {
     return RoleOnContract.create(req.body)
@@ -92,7 +104,7 @@ export function upsert(req, res) {
     }
 
     return RoleOnContract.findById(req.params.id).then(item => {
-        if (role) {
+        if (item) {
             RoleOnContract.update(
                 req.body,
                 {

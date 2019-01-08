@@ -41,7 +41,7 @@ export default function(sequelize, DataTypes) {
             field: 'ContractualDataIsCompany'
         },
         contractualDataCompanyName: {
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.STRING,
             field: 'ContractualDataCompanyName'
         },
         contractualDataFirstName: {

@@ -46,7 +46,7 @@ export default function(sequelize, DataTypes) {
             field: 'RentInLetters'
         },
         rentCurrency: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             field: 'RentCurrency'
         },
         upfrontPayment: {
@@ -54,15 +54,15 @@ export default function(sequelize, DataTypes) {
             field: 'UpfrontPayment'
         },
         upfrontPaymentLetters: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             field: 'UpfrontPaymentLetters'
         },
         upfrontPaymentCurrency: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             field: 'UpfrontPaymentCurrency'
         },
         upfrontPaymentDetails: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             field: 'UpfrontPaymentDetails'
         },
         warranty: {

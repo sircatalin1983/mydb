@@ -10,11 +10,12 @@
 
 import { applyPatch } from 'fast-json-patch';
 import { InventoryPart } from '../../sqldb';
+import { Part } from '../../sqldb';
 
 function respondWithResult(res, statusCode) {
     statusCode = statusCode || 200;
-    return function(entity) {
-        if(entity) {
+    return function (entity) {
+        if (entity) {
             return res.status(statusCode).json(entity);
         }
         return null;
@@ -22,10 +23,10 @@ function respondWithResult(res, statusCode) {
 }
 
 function patchUpdates(patches) {
-    return function(entity) {
+    return function (entity) {
         try {
             applyPatch(entity, patches, /*validate*/ true);
-        } catch(err) {
+        } catch (err) {
             return Promise.reject(err);
         }
 
@@ -34,8 +35,8 @@ function patchUpdates(patches) {
 }
 
 function removeEntity(res) {
-    return function(entity) {
-        if(entity) {
+    return function (entity) {
+        if (entity) {
             return entity.destroy()
                 .then(() => res.status(204).end());
         }
@@ -43,8 +44,8 @@ function removeEntity(res) {
 }
 
 function handleEntityNotFound(res) {
-    return function(entity) {
-        if(!entity) {
+    return function (entity) {
+        if (!entity) {
             res.status(404).end();
             return null;
         }
@@ -54,7 +55,7 @@ function handleEntityNotFound(res) {
 
 function handleError(res, statusCode) {
     statusCode = statusCode || 500;
-    return function(err) {
+    return function (err) {
         res.status(statusCode).send(err);
     };
 }
@@ -78,6 +79,23 @@ export function show(req, res) {
         .catch(handleError(res));
 }
 
+export function showInventoryParts(req, res) {
+    return InventoryPart.findAll(
+        {
+            where: {
+                idContract: req.params.idContract
+            },
+            include: [{
+                model: Part,
+                required: false
+            }],
+            logging: console.log
+        }
+    )
+        .then(respondWithResult(res))
+        .catch(handleError(res));
+}
+
 // Creates a new InventoryPart in the DB
 export function create(req, res) {
     return InventoryPart.create(req.body)
@@ -87,8 +105,6 @@ export function create(req, res) {
 
 // Upserts the given InventoryPart in the DB at the specified ID
 export function upsert(req, res) {
-
-
     if (req.body.id) {
         Reflect.deleteProperty(req.body, 'id');
     }
@@ -116,24 +132,24 @@ export function upsert(req, res) {
                 .catch(handleError(res));
         }
     });
-/*
-
-    if(req.body.id) {
-        Reflect.deleteProperty(req.body, 'id');
-    }
-    return InventoryPart.upsert(req.body, {
-        where: {
-            id: req.params.id
+    /*
+    
+        if(req.body.id) {
+            Reflect.deleteProperty(req.body, 'id');
         }
-    })
-        .then(respondWithResult(res))
-        .catch(handleError(res));
-        //*/
+        return InventoryPart.upsert(req.body, {
+            where: {
+                id: req.params.id
+            }
+        })
+            .then(respondWithResult(res))
+            .catch(handleError(res));
+            //*/
 }
 
 // Updates an existing InventoryPart in the DB
 export function patch(req, res) {
-    if(req.body.id) {
+    if (req.body.id) {
         Reflect.deleteProperty(req.body, 'id');
     }
     return InventoryPart.find({
